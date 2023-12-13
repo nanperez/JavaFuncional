@@ -1,0 +1,59 @@
+@startuml
+class Empleado {
+  - education: String
+  - joiningYear: int
+  - city: String
+  - paymentTier: String
+  - age: int
+  - gender: String
+  - everBenched: boolean
+  - experienceInCurrentDomain: int
+  - leaveOrNot: boolean
+  + Empleado(education: String, joiningYear: int, city: String, paymentTier: String, age: int, gender: String, everBenched: boolean, experienceInCurrentDomain: int, leaveOrNot: boolean)
+  + getEducation(): String
+  + setEducation(education: String): void
+  + getJoiningYear(): int
+  + setJoiningYear(joiningYear: int): void
+  + getCity(): String
+  + setCity(city: String): void
+  + getPaymentTier(): String
+  + setPaymentTier(paymentTier: String): void
+  + getAge(): int
+  + setAge(age: int): void
+  + getGender(): String
+  + setGender(gender: String): void
+  + isEverBenched(): boolean
+  + setEverBenched(everBenched: boolean): void
+  + getExperienceInCurrentDomain(): int
+  + setExperienceInCurrentDomain(experienceInCurrentDomain: int): void
+  + isLeaveOrNot(): boolean
+  + setLeaveOrNot(leaveOrNot: boolean): void
+  + toString(): String
+}
+
+interface IEmpleadoRepository {
+  + obtenerEmpleados(): List<Empleado>
+}
+
+class CsvReader {
+  - ruta: String
+  - SEPARADOR: String
+  + CsvReader(ruta: String)
+  + obtenerEmpleados(): List<Empleado>
+  - mapearAEmpleado(campos: String[]): Empleado
+}
+
+class LeerFuncional {
+  - empleadoRepository: IEmpleadoRepository
+  + LeerFuncional(empleadoRepository: IEmpleadoRepository)
+  + procesarEmpleados(): void
+  + main(args: String[]): void
+}
+
+LeerFuncional ..> IEmpleadoRepository : <<use>>
+
+LeerFuncional --> CsvReader : empleadoRepository
+CsvReader --> IEmpleadoRepository : <<implements>>
+
+Empleado -- IEmpleadoRepository : <<create>>
+@enduml
